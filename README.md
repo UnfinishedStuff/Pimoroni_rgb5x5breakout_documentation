@@ -53,4 +53,4 @@ This is documentation which digs a little deeper into how the breakout is contro
 
 This points the Command Register to a particular Response/Frame register.  By default it triggers a read of the Command Register (0xFD) which returns the last Response/Page register accessed.  If a value of `bank` is provided it then points the Command Register to that Response/Page register.
 
-By default when `show()` is called it sets this to `0` if `_current_frame` is `0` or `1`.  Every time you clear the buffer `_current_frame` is set to `0`.  Alternatively, you appear to be able to use `_frame` to set the frame.  By default this should set the board to display the values saved for that frame register.
+By default when `show()` is called it sets this to `0` (there's an odd check to see if `_current_frame` is `1` before it sets `next_frame` to `0` anyway, and then sets the current Frame/Page register to `0`.  Is this a hangover from other code?).  Every time you clear the buffer `_current_frame` is set to `0`.  Alternatively, you appear to be able to use `_frame` to set the frame.  By default this should set the board to display the values saved for that frame register.
