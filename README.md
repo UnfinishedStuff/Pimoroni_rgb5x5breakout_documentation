@@ -2,7 +2,7 @@
 
 This is a file of some self-made documentation.  Pimoroni don't seem to have documented this board at all (!), and I'm considering adding a few bits to the library, so I figured that documenting the features which are already there is the smart place to start.
 
-##### This will focus on functions which the user is likely to use, and ignore "backend" functions which a user shouldn't need to interact with.
+##### This first section will focus on functions which the user is likely to use, and ignore "backend" functions which a user shouldn't need to interact with.  Some additional stuff for my own information will follow later.
 
 Using the library is quite straightforward.  First, you import the library and create an instance of the device:
 
@@ -44,3 +44,13 @@ When it gets fixed, this will be used to set a group of user-selected pixels to 
 ### show()
 
 When you use `set_pixel()` to define the colour of a pixel, those values are simply stored in a buffer.  It isn't until you call `show()` that those values are actually pushed to the breakout board and are then displayed.  
+
+# Backend stuff
+
+This is documentation which digs a little deeper into how the breakout is controlled.  If all you want to do is show LEDs on the board then you don't need to read this, I'm mainly putting it here to keep a note of things I've found whilst figuring out what else I can do to the library.
+
+### \_bank(bank=None)
+
+This points the Command Register to a particular Response/Frame register.  By default it triggers a read of the Command Register (0xFD) which returns the last Response/Page register accessed.  If a value of `bank` is provided it then points the Command Register to that Response/Page register.
+
+By default when `show()` is called it sets this to `0` if `_current_frame` is `0` or `1`.  Every time you clear the buffer `_current_frame` is set to `0`.  Alternatively, you appear to be able to use `_frame` to set the frame.  By default this should set the board to display the values saved for that frame register.
